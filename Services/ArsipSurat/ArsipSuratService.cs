@@ -57,7 +57,7 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
       {
         NomorSurat = dto.NomorSurat,
         Judul = dto.Judul,
-        KategoriSuratId = dto.KategoriSuratId,
+        KategoriSuratId = dto.KategoriSuratId.Value,
         // WaktuPengarsipan = DateTime.Now,
         WaktuPengarsipan = DateTime.UtcNow,
         FilePath = filePath
@@ -86,7 +86,7 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
         // Update properti lainnya
         arsipSurat.NomorSurat = dto.NomorSurat;
         arsipSurat.Judul = dto.Judul;
-        arsipSurat.KategoriSuratId = dto.KategoriSuratId;
+        arsipSurat.KategoriSuratId = dto.KategoriSuratId.Value;
 
         _context.ArsipSurats.Update(arsipSurat);
         await _context.SaveChangesAsync();

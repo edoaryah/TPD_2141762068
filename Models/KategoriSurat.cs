@@ -12,6 +12,7 @@ namespace AspnetCoreMvcFull.Models
     [StringLength(100)]
     public string NamaKategori { get; set; }
 
+    [Required(ErrorMessage = "Keterangan wajib diisi.")]
     [StringLength(255)]
     public string Keterangan { get; set; }
 

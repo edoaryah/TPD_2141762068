@@ -4,6 +4,7 @@
   // Logika untuk menentukan judul halaman
   bool isEditMode = Model.Id != 0;
   ViewData["Title"] = isEditMode ? "Ubah Arsip Surat" : "Unggah Surat";
+  string pageDescription = isEditMode ? "Silakan ubah detail arsip surat pada form di bawah ini." : "Unggah surat yang telah terbit pada form ini untuk diarsipkan.";
   @* ViewData["isNavbar"] = false;
   ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
@@ -22,14 +23,11 @@
 <div class="row">
   <div class="col-xl">
     <div class="card mb-4">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">@ViewData["Title"]</h5>
-      </div>
       <div class="card-body">
+        <p>@pageDescription</p>
         @if (!isEditMode)
         {
-          <p>Unggah surat yang telah terbit pada form ini untuk diarsipkan.</p>
-          <p><strong>Catatan:</strong><br />- Gunakan file berformat PDF.</p>
+          <p><strong>Catatan:</strong><br />Gunakan file berformat PDF.</p>
         }
 
         <form asp-action="@(isEditMode ? "Edit" : "Create")" asp-route-id="@Model.Id" method="post"

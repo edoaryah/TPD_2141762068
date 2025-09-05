@@ -9,16 +9,20 @@
     ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
 
-<h4 class="fw-bold py-3 mb-4">
-    <span class="text-muted fw-light">Kategori Surat /</span> @(isEditMode ? "Ubah" : "Tambah")
-</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="@Url.Action("Index", "KategoriSurat")">Kategori Surat</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      @(isEditMode ? "Ubah" : "Tambah")
+    </li>
+  </ol>
+</nav>
 
 <div class="row">
     <div class="col-xl">
         <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Formulir Kategori Surat</h5>
-            </div>
             <div class="card-body">
                 <p>@pageDescription</p>
 

@@ -1,6 +1,7 @@
 @{
   TempData.Keep();
   string? currentPage = ViewContext.HttpContext.Request.Path;
+  var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
 }
 
 <!-- Menu -->
@@ -27,21 +28,23 @@
   @* ! Full version menu-items *@
   <ul class="menu-inner py-1">
 
-    <li class='menu-item@(currentPage == "/" ? " active" : "")'>
+    <li class='menu-item@(currentController == "ArsipSurat" ? " active" : "")'>
       <a asp-controller="ArsipSurat" asp-action="Index" class="menu-link">
         <i class="menu-icon tf-icons bx bx-collection"></i>
-        <div class="text-truncate" data-i18n="Arsip Surat">Arsip Surat</div>
+        <div class="text-truncate" data-i1n="Arsip Surat">Arsip Surat</div>
       </a>
     </li>
-    <li class='menu-item@(currentPage == "/KategoriSurat" ? " active" : "")'>
+
+    <li class='menu-item@(currentController == "KategoriSurat" ? " active" : "")'>
       <a asp-controller="KategoriSurat" asp-action="Index" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-collection"></i>
+        <i class="menu-icon tf-icons bx bx-category"></i>
         <div class="text-truncate" data-i18n="Kategori Surat">Kategori Surat</div>
       </a>
     </li>
-    <li class='menu-item@(currentPage == "/About" ? " active" : "")'>
+
+    <li class='menu-item@(currentController == "About" ? " active" : "")'>
       <a asp-controller="About" asp-action="Index" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-collection"></i>
+        <i class="menu-icon tf-icons bx bx-info-circle"></i>
         <div class="text-truncate" data-i18n="About">About</div>
       </a>
     </li>

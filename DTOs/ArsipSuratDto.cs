@@ -14,7 +14,7 @@ namespace AspnetCoreMvcFull.DTOs
     public string Judul { get; set; }
 
     [Required(ErrorMessage = "Kategori wajib dipilih.")]
-    public int KategoriSuratId { get; set; }
+    public int? KategoriSuratId { get; set; }
 
     [Required(ErrorMessage = "File PDF wajib diunggah.")]
     public IFormFile? FilePdf { get; set; }
