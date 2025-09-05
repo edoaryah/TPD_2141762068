@@ -16,9 +16,20 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
       _context = context;
     }
 
-    public async Task<IEnumerable<Models.KategoriSurat>> GetAllAsync()
+    public async Task<IEnumerable<Models.KategoriSurat>> GetAllAsync(string searchQuery)
     {
-      return await _context.KategoriSurats.ToListAsync();
+      var query = _context.KategoriSurats.AsQueryable();
+
+      if (!string.IsNullOrEmpty(searchQuery))
+      {
+        var lowerCaseQuery = searchQuery.ToLower();
+        query = query.Where(k =>
+            k.NamaKategori.ToLower().Contains(lowerCaseQuery) ||
+            k.Keterangan.ToLower().Contains(lowerCaseQuery)
+        );
+      }
+
+      return await query.OrderBy(k => k.Id).ToListAsync();
     }
 
     public async Task<Models.KategoriSurat> GetByIdAsync(int id)

@@ -15,9 +15,10 @@ namespace AspnetCoreMvcFull.Controllers
     }
 
     // GET: /KategoriSurat
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchQuery)
     {
-      var kategoriList = await _kategoriService.GetAllAsync();
+      ViewData["CurrentFilter"] = searchQuery;
+      var kategoriList = await _kategoriService.GetAllAsync(searchQuery);
       return View(kategoriList);
     }
 

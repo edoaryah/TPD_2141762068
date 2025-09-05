@@ -7,7 +7,7 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
 {
   public interface IKategoriSuratService
   {
-    Task<IEnumerable<Models.KategoriSurat>> GetAllAsync();
+    Task<IEnumerable<Models.KategoriSurat>> GetAllAsync(string searchQuery);
     Task<Models.KategoriSurat> GetByIdAsync(int id);
     Task CreateAsync(KategoriSuratDto dto);
     Task UpdateAsync(KategoriSuratDto dto);

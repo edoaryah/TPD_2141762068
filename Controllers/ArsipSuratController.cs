@@ -45,7 +45,7 @@ namespace AspnetCoreMvcFull.Controllers
     public async Task<IActionResult> Create()
     {
       // Siapkan data kategori untuk dropdown
-      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori");
+      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori");
       // Kirim DTO kosong ke View agar tidak null
       return View(new ArsipSuratDto());
     }
@@ -63,7 +63,7 @@ namespace AspnetCoreMvcFull.Controllers
         return RedirectToAction(nameof(Index));
       }
       // Jika model tidak valid, kirim kembali daftar kategori ke view
-      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori");
+      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori");
       return View(dto);
     }
 
@@ -83,7 +83,7 @@ namespace AspnetCoreMvcFull.Controllers
         KategoriSuratId = arsip.KategoriSuratId
       };
 
-      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori", arsip.KategoriSuratId);
+      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori", arsip.KategoriSuratId);
       return View("Create", dto); // Menggunakan kembali View "Create.cshtml"
     }
 
@@ -106,7 +106,7 @@ namespace AspnetCoreMvcFull.Controllers
         return RedirectToAction(nameof(Index));
       }
 
-      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori", dto.KategoriSuratId);
+      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori", dto.KategoriSuratId);
       return View("Create", dto); // Kembali ke form jika tidak valid
     }
 
