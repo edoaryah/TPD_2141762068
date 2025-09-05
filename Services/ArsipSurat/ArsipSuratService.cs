@@ -51,7 +51,8 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
         NomorSurat = dto.NomorSurat,
         Judul = dto.Judul,
         KategoriSuratId = dto.KategoriSuratId,
-        WaktuPengarsipan = DateTime.Now,
+        // WaktuPengarsipan = DateTime.Now,
+        WaktuPengarsipan = DateTime.UtcNow,
         FilePath = filePath
       };
 

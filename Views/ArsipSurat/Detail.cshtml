@@ -1,0 +1,46 @@
+@model AspnetCoreMvcFull.Models.ArsipSurat
+
+@{
+  ViewData["Title"] = "Lihat Arsip Surat";
+  ViewData["isNavbar"] = false;
+  ViewData["navbarType"] = "layout-navbar-hidden";
+}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="@Url.Action("Index", "Home")">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="@Url.Action("Index", "ArsipSurat")">Arsip Surat</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      Detail Arsip Surat
+    </li>
+  </ol>
+</nav>
+
+<div class="card">
+  <div class="card-header">
+    <h5>Detail Arsip Surat</h5>
+  </div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush mb-4">
+      <li class="list-group-item"><strong>Nomor:</strong> @Model.NomorSurat</li>
+      <li class="list-group-item"><strong>Kategori:</strong> @Model.KategoriSurat.NamaKategori</li>
+      <li class="list-group-item"><strong>Judul:</strong> @Model.Judul</li>
+      <li class="list-group-item"><strong>Waktu Unggah:</strong>
+        @Model.WaktuPengarsipan.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</li>
+    </ul>
+
+    <div class="pdf-viewer-container border rounded mb-4">
+      <iframe src="~/@Model.FilePath" width="100%" height="500px" style="border: none;"></iframe>
+    </div>
+
+    <div>
+      <a asp-action="Index" class="btn btn-secondary">
+        << Kembali</a>
+          <a asp-action="Download" asp-route-id="@Model.Id" class="btn btn-warning">Unduh</a>
+    </div>
+  </div>
+</div>
