@@ -2,17 +2,17 @@
 
 @{
   ViewData["Title"] = "Kategori Surat";
-  ViewData["isNavbar"] = false;
-  ViewData["navbarType"] = "layout-navbar-hidden";
+  @* ViewData["isNavbar"] = false;
+  ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="@Url.Action("Index", "Home")">Home</a>
+      <a href="@Url.Action("Index", "KategoriSurat")">Kategori Surat</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-      Kategori Surat
+      Home
     </li>
   </ol>
 </nav>
@@ -44,11 +44,10 @@
                 <td>@item.Keterangan</td>
                 <td>
                   <div class="d-flex align-items-center">
-                    <form asp-action="Delete" asp-route-id="@item.Id" method="post"
-                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
-                      @Html.AntiForgeryToken()
-                      <button type="submit" class="btn btn-danger btn-sm me-2">Hapus</button>
-                    </form>
+                    <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal"
+                      data-bs-target="#deleteModal" data-id="@item.Id" data-nama="@item.NamaKategori">
+                      Hapus
+                    </button>
 
                     <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                   </div>
@@ -66,7 +65,47 @@
       </table>
     </div>
     <div class="mt-4">
-      <a class="btn btn-success" asp-action="Create">[+] Tambah Kategori Baru...</a>
+      <a class="btn btn-primary" asp-action="Create">[+] Tambah Kategori Baru...</a>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCenterTitle">Konfirmasi Hapus</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Apakah Anda yakin ingin menghapus kategori ini?</p>
+        <p><strong><span id="namaKategoriToDelete"></span></strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+        <form id="deleteForm" asp-action="Delete" method="post">
+          @Html.AntiForgeryToken()
+          <input type="hidden" id="recordIdToDelete" name="id" />
+          <button type="submit" class="btn btn-danger">Ya, Hapus!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section PageScripts {
+  <script>
+    var deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      var recordId = button.getAttribute('data-id');
+      var namaKategori = button.getAttribute('data-nama');
+
+      var modalNamaKategori = deleteModal.querySelector('#namaKategoriToDelete');
+      var recordIdInput = deleteModal.querySelector('#recordIdToDelete');
+
+      modalNamaKategori.textContent = namaKategori;
+      recordIdInput.value = recordId;
+    });
+  </script>
+}

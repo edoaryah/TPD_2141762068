@@ -23,12 +23,19 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
     public async Task<IEnumerable<Models.ArsipSurat>> GetAllAsync(string searchQuery)
     {
       var query = _context.ArsipSurats
-          .Include(s => s.KategoriSurat) // Include data Kategori
+          .Include(s => s.KategoriSurat)
           .AsQueryable();
 
       if (!string.IsNullOrEmpty(searchQuery))
       {
-        query = query.Where(s => s.Judul.Contains(searchQuery));
+        // Ubah searchQuery menjadi huruf kecil sekali saja untuk efisiensi
+        var lowerCaseQuery = searchQuery.ToLower();
+
+        // Ubah kondisi Where untuk mencari di dua kolom dan abaikan case
+        query = query.Where(s =>
+            s.Judul.ToLower().Contains(lowerCaseQuery) ||
+            s.NomorSurat.ToLower().Contains(lowerCaseQuery)
+        );
       }
 
       return await query.OrderByDescending(s => s.WaktuPengarsipan).ToListAsync();

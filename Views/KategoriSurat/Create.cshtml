@@ -5,8 +5,8 @@
     bool isEditMode = Model != null && Model.Id != 0;
     ViewData["Title"] = isEditMode ? "Ubah Kategori" : "Tambah Kategori";
     string pageDescription = isEditMode ? "Ubah data kategori. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'." : "Tambahkan data kategori baru. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'.";
-    ViewData["isNavbar"] = false;
-    ViewData["navbarType"] = "layout-navbar-hidden";
+    @* ViewData["isNavbar"] = false;
+    ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
 
 <h4 class="fw-bold py-3 mb-4">

@@ -4,8 +4,8 @@
   // Logika untuk menentukan judul halaman
   bool isEditMode = Model.Id != 0;
   ViewData["Title"] = isEditMode ? "Ubah Arsip Surat" : "Unggah Surat";
-  ViewData["isNavbar"] = false;
-  ViewData["navbarType"] = "layout-navbar-hidden";
+  @* ViewData["isNavbar"] = false;
+  ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
 
 <h4 class="fw-bold py-3 mb-4">
