@@ -16,6 +16,9 @@ namespace AspnetCoreMvcFull.Models
     [StringLength(255)]
     public string Keterangan { get; set; }
 
+    // Soft Delete Kategori
+    public bool IsDeleted { get; set; }
+
     // Relasi one-to-many: Satu kategori bisa memiliki banyak surat
     public ICollection<ArsipSurat> ArsipSurats { get; set; }
   }

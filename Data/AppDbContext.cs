@@ -16,12 +16,12 @@ namespace AspnetCoreMvcFull.Data
     {
       base.OnModelCreating(modelBuilder);
 
-      // Seeding data awal untuk kategori (opsional, tapi membantu untuk testing)
+      // Seeding data awal untuk kategori
       modelBuilder.Entity<KategoriSurat>().HasData(
-          new KategoriSurat { Id = 1, NamaKategori = "Undangan", Keterangan = "Surat bersifat undangan resmi." },
-          new KategoriSurat { Id = 2, NamaKategori = "Pengumuman", Keterangan = "Surat bersifat pengumuman." },
-          new KategoriSurat { Id = 3, NamaKategori = "Nota Dinas", Keterangan = "Surat internal antar dinas." },
-          new KategoriSurat { Id = 4, NamaKategori = "Pemberitahuan", Keterangan = "Surat bersifat pemberitahuan informasi." }
+          new KategoriSurat { Id = 1, NamaKategori = "Undangan", Keterangan = "Surat bersifat undangan resmi.", IsDeleted = false },
+          new KategoriSurat { Id = 2, NamaKategori = "Pengumuman", Keterangan = "Surat bersifat pengumuman.", IsDeleted = false },
+          new KategoriSurat { Id = 3, NamaKategori = "Nota Dinas", Keterangan = "Surat internal antar dinas.", IsDeleted = false },
+          new KategoriSurat { Id = 4, NamaKategori = "Pemberitahuan", Keterangan = "Surat bersifat pemberitahuan informasi.", IsDeleted = false }
       );
     }
   }

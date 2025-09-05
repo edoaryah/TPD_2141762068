@@ -6,7 +6,6 @@ namespace AspnetCoreMvcFull.Controllers
   {
     public IActionResult Index()
     {
-      // Controller ini hanya menampilkan halaman statis About
       return View();
     }
   }

@@ -74,7 +74,26 @@ namespace AspnetCoreMvcFull.Controllers
       var arsip = await _arsipService.GetByIdAsync(id.Value);
       if (arsip == null) return NotFound();
 
-      // Mapping dari Model ke DTO untuk dikirim ke View
+      // --- AWAL BLOK PERBAIKAN FINAL ---
+
+      // 1. Ambil semua kategori yang aktif.
+      var kategoriOptions = (await _kategoriService.GetAllAsync(null)).ToList();
+
+      // 2. Cek apakah kategori yang dipakai surat ini (arsip.KategoriSurat) ada di daftar kategori aktif.
+      bool isCurrentCategoryActive = kategoriOptions.Any(k => k.Id == arsip.KategoriSuratId);
+
+      // 3. Jika kategori saat ini TIDAK aktif (sudah di-soft-delete)
+      if (!isCurrentCategoryActive)
+      {
+        // Hapus kategori aktif lain yang mungkin punya nama yang sama untuk menghindari duplikat di dropdown
+        kategoriOptions.RemoveAll(k => k.NamaKategori.Equals(arsip.KategoriSurat.NamaKategori, StringComparison.OrdinalIgnoreCase));
+
+        // Tambahkan kategori historis (yang sudah di-soft-delete) ke dalam daftar pilihan.
+        kategoriOptions.Add(arsip.KategoriSurat);
+      }
+
+      // --- AKHIR BLOK PERBAIKAN FINAL ---
+
       var dto = new ArsipSuratDto
       {
         Id = arsip.Id,
@@ -83,8 +102,10 @@ namespace AspnetCoreMvcFull.Controllers
         KategoriSuratId = arsip.KategoriSuratId
       };
 
-      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori", arsip.KategoriSuratId);
-      return View("Create", dto); // Menggunakan kembali View "Create.cshtml"
+      // Urutkan daftar akhir berdasarkan nama untuk tampilan yang rapi
+      ViewData["KategoriList"] = new SelectList(kategoriOptions.OrderBy(k => k.NamaKategori), "Id", "NamaKategori", arsip.KategoriSuratId);
+
+      return View("Create", dto);
     }
 
     [HttpPost]

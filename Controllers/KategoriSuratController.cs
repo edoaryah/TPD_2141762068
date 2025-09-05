@@ -25,7 +25,7 @@ namespace AspnetCoreMvcFull.Controllers
     // GET: /KategoriSurat/Create
     public IActionResult Create()
     {
-      return View();
+      return View(new KategoriSuratDto());
     }
 
     // POST: /KategoriSurat/Create
@@ -35,9 +35,18 @@ namespace AspnetCoreMvcFull.Controllers
     {
       if (ModelState.IsValid)
       {
-        await _kategoriService.CreateAsync(dto);
-        TempData["SuccessMessage"] = "Kategori baru berhasil ditambahkan!";
-        return RedirectToAction(nameof(Index));
+        try
+        {
+          await _kategoriService.CreateAsync(dto);
+          TempData["SuccessMessage"] = "Kategori baru berhasil ditambahkan!";
+          return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+          // Kirim pesan error via TempData untuk ditangkap oleh Toastify
+          TempData["ErrorMessage"] = ex.Message;
+          return View(dto);
+        }
       }
       return View(dto);
     }
@@ -46,17 +55,14 @@ namespace AspnetCoreMvcFull.Controllers
     public async Task<IActionResult> Edit(int? id)
     {
       if (id == null) return NotFound();
-
       var kategori = await _kategoriService.GetByIdAsync(id.Value);
       if (kategori == null) return NotFound();
-
       var dto = new KategoriSuratDto
       {
         Id = kategori.Id,
         NamaKategori = kategori.NamaKategori,
         Keterangan = kategori.Keterangan
       };
-
       return View("Create", dto);
     }
 
@@ -69,11 +75,20 @@ namespace AspnetCoreMvcFull.Controllers
 
       if (ModelState.IsValid)
       {
-        await _kategoriService.UpdateAsync(dto);
-        TempData["SuccessMessage"] = "Kategori berhasil diperbarui!";
-        return RedirectToAction(nameof(Index));
+        try
+        {
+          await _kategoriService.UpdateAsync(dto);
+          TempData["SuccessMessage"] = "Kategori berhasil diperbarui!";
+          return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+          // Kirim pesan error via TempData untuk ditangkap oleh Toastify
+          TempData["ErrorMessage"] = ex.Message;
+          return View("Create", dto);
+        }
       }
-      return View(dto);
+      return View("Create", dto);
     }
 
     // POST: /KategoriSurat/Delete/5

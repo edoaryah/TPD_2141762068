@@ -18,7 +18,7 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
 
     public async Task<IEnumerable<Models.KategoriSurat>> GetAllAsync(string searchQuery)
     {
-      var query = _context.KategoriSurats.AsQueryable();
+      var query = _context.KategoriSurats.Where(k => !k.IsDeleted).AsQueryable();
 
       if (!string.IsNullOrEmpty(searchQuery))
       {
@@ -39,17 +39,37 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
 
     public async Task CreateAsync(KategoriSuratDto dto)
     {
+      // DITAMBAHKAN: Validasi untuk mencegah nama duplikat pada kategori aktif
+      var existingCategory = await _context.KategoriSurats
+          .FirstOrDefaultAsync(k => k.NamaKategori.ToLower() == dto.NamaKategori.ToLower() && !k.IsDeleted);
+
+      if (existingCategory != null)
+      {
+        throw new InvalidOperationException("Kategori dengan nama yang sama sudah ada.");
+      }
+
       var kategori = new Models.KategoriSurat
       {
         NamaKategori = dto.NamaKategori,
-        Keterangan = dto.Keterangan
+        Keterangan = dto.Keterangan,
+        IsDeleted = false // Pastikan IsDeleted = false saat dibuat
       };
+
       _context.KategoriSurats.Add(kategori);
       await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(KategoriSuratDto dto)
     {
+      // DITAMBAHKAN: Validasi untuk mencegah nama duplikat saat update
+      var existingCategory = await _context.KategoriSurats
+          .FirstOrDefaultAsync(k => k.NamaKategori.ToLower() == dto.NamaKategori.ToLower() && !k.IsDeleted && k.Id != dto.Id);
+
+      if (existingCategory != null)
+      {
+        throw new InvalidOperationException("Kategori dengan nama yang sama sudah ada.");
+      }
+
       var kategori = await GetByIdAsync(dto.Id);
       if (kategori != null)
       {
@@ -65,7 +85,9 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
       var kategori = await GetByIdAsync(id);
       if (kategori != null)
       {
-        _context.KategoriSurats.Remove(kategori);
+        // DIUBAH: Terapkan Soft Delete, jangan hapus fisik
+        kategori.IsDeleted = true;
+        _context.KategoriSurats.Update(kategori);
         await _context.SaveChangesAsync();
       }
     }
