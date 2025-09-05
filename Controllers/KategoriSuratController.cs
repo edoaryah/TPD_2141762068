@@ -35,6 +35,7 @@ namespace AspnetCoreMvcFull.Controllers
       if (ModelState.IsValid)
       {
         await _kategoriService.CreateAsync(dto);
+        TempData["SuccessMessage"] = "Kategori baru berhasil ditambahkan!";
         return RedirectToAction(nameof(Index));
       }
       return View(dto);
@@ -68,6 +69,7 @@ namespace AspnetCoreMvcFull.Controllers
       if (ModelState.IsValid)
       {
         await _kategoriService.UpdateAsync(dto);
+        TempData["SuccessMessage"] = "Kategori berhasil diperbarui!";
         return RedirectToAction(nameof(Index));
       }
       return View(dto);
@@ -79,6 +81,7 @@ namespace AspnetCoreMvcFull.Controllers
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
       await _kategoriService.DeleteAsync(id);
+      TempData["SuccessMessage"] = "Kategori berhasil dihapus!";
       return RedirectToAction(nameof(Index));
     }
   }

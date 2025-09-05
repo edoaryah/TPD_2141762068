@@ -6,6 +6,18 @@
   ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
 
+@{
+  var message = TempData["SuccessMessage"] as string;
+  if (message != null)
+  {
+    TempData.Remove("SuccessMessage");
+  }
+}
+
+@section PageStyles {
+  <link rel="stylesheet" href="~/vendor/libs/toastify/toastify.min.css">
+}
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
@@ -94,7 +106,30 @@
 </div>
 
 @section PageScripts {
+  <script src="~/vendor/libs/toastify/toastify-js.js"></script>
   <script>
+    function showToast(message, type = 'success') {
+      const title = type === 'success' ? 'Berhasil!' : 'Gagal!';
+      Toastify({
+        text: `${title} ${message}`,
+        duration: 3000,
+        close: true,
+        gravity: 'top',
+        position: 'right',
+        stopOnFocus: true,
+        style: {
+          background: type === 'success' ? '#198754' : '#dc3545',
+          borderRadius: '0.5rem',
+        },
+      }).showToast();
+    }
+
+    var successMessage = "@message";
+
+    if (successMessage) {
+      showToast(successMessage, 'success');
+    }
+
     var deleteModal = document.getElementById('deleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
       var button = event.relatedTarget;
