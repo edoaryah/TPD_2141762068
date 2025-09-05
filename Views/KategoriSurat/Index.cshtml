@@ -38,11 +38,12 @@
   <div class="card-body">
     <div class="row mb-3">
       <div class="col-md-5">
-        <form asp-action="Index" method="get" class="d-flex">
+        <form id="searchForm" asp-action="Index" method="get" class="d-flex">
           <div class="input-group">
-            <input type="text" class="form-control" name="searchQuery" value="@ViewData["CurrentFilter"]"
-              placeholder="Cari kategori..." aria-label="Cari surat">
-            <button class="btn btn-outline-primary" type="submit">Cari!</button>
+            <span class="input-group-text"><i class="bx bx-search"></i></span>
+            <input id="searchInput" type="text" class="form-control" name="searchQuery"
+              value="@ViewData["CurrentFilter"]" placeholder="Ketik untuk mencari kategori..."
+              aria-label="Cari kategori">
           </div>
         </form>
       </div>
@@ -122,6 +123,29 @@
 @section PageScripts {
   <script src="~/vendor/libs/toastify/toastify-js.js"></script>
   <script>
+    // script memindahkan kursor ke akhir teks yang sudah diketik
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput && searchInput.value.length > 0) {
+        searchInput.focus();
+        const len = searchInput.value.length;
+        searchInput.setSelectionRange(len, len);
+      }
+    });
+
+    // pencarian dengan teknik debouncing
+    let debounceTimer;
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function (e) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () {
+        searchForm.submit();
+      }, 500);
+    });
+
+    // toastify
     function showToast(message, type = 'success') {
       const title = type === 'success' ? 'Sukses!' : 'Gagal!';
       Toastify({
@@ -144,6 +168,7 @@
       showToast(successMessage, 'success');
     }
 
+    // modal delete
     var deleteModal = document.getElementById('deleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
       var button = event.relatedTarget;
