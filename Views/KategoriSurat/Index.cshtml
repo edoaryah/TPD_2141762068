@@ -32,7 +32,7 @@
 <div class="card">
   <div class="card-header">
     <p class="mb-0">Berikut ini adalah kategori yang bisa digunakan untuk melabeli surat.</p>
-    <p>Klik "Tambah" pada kolom aksi untuk menambahkan kategori baru.</p>
+    <p class="mb-0">Klik "Tambah" pada kolom aksi untuk menambahkan kategori baru.</p>
   </div>
   <div class="card-body">
     <div class="row mb-3">
@@ -40,7 +40,7 @@
         <form asp-action="Index" method="get" class="d-flex">
           <div class="input-group">
             <input type="text" class="form-control" name="searchQuery" value="@ViewData["CurrentFilter"]"
-              placeholder="Cari surat..." aria-label="Cari surat">
+              placeholder="Cari kategori..." aria-label="Cari surat">
             <button class="btn btn-outline-primary" type="submit">Cari!</button>
           </div>
         </form>
@@ -68,12 +68,12 @@
                 <td>@item.Keterangan</td>
                 <td>
                   <div class="d-flex align-items-center">
-                    <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-danger btn-sm me-2" style="width: 60px;" data-bs-toggle="modal"
                       data-bs-target="#deleteModal" data-id="@item.Id" data-nama="@item.NamaKategori">
                       Hapus
                     </button>
 
-                    <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-info btn-sm" style="width: 60px;" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                   </div>
                 </td>
               </tr>
@@ -88,8 +88,8 @@
         </tbody>
       </table>
     </div>
-    <div class="mt-4">
-      <a class="btn btn-primary" asp-action="Create">[+] Tambah Kategori Baru...</a>
+    <div class="mt-5">
+      <a class="btn btn-primary" asp-action="Create">Tambah Kategori Baru</a>
     </div>
   </div>
 </div>
@@ -98,19 +98,20 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalCenterTitle">Konfirmasi Hapus</h5>
+        <h5 class="modal-title w-100 text-center" id="modalCenterTitle">Konfirmasi Hapus</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center">
         <p>Apakah Anda yakin ingin menghapus kategori ini?</p>
         <p><strong><span id="namaKategoriToDelete"></span></strong></p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal"
+          style="width: 120px;">Batal</button>
         <form id="deleteForm" asp-action="Delete" method="post">
           @Html.AntiForgeryToken()
           <input type="hidden" id="recordIdToDelete" name="id" />
-          <button type="submit" class="btn btn-danger">Ya, Hapus!</button>
+          <button type="submit" class="btn btn-danger" style="width: 120px;">Ya, Hapus!</button>
         </form>
       </div>
     </div>

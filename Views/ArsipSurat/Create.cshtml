@@ -8,9 +8,16 @@
   ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
 
-<h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Arsip Surat /</span> @(isEditMode ? "Ubah" : "Unggah")
-</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="@Url.Action("Index", "ArsipSurat")">Arsip Surat</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      @(isEditMode ? "Ubah" : "Unggah")
+    </li>
+  </ol>
+</nav>
 
 <div class="row">
   <div class="col-xl">
@@ -66,10 +73,9 @@
             <span asp-validation-for="FilePdf" class="text-danger"></span>
           </div>
 
-          <div class="mt-4">
-            <a asp-action="Index" class="btn btn-secondary">
-              << Kembali </a>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+          <div class="mt-5">
+            <a asp-action="Index" class="btn btn-secondary me-2" style="width: 120px;">Kembali</a>
+            <button type="submit" class="btn btn-primary" style="width: 120px;">Simpan</button>
           </div>
         </form>
       </div>
