@@ -82,7 +82,15 @@ Tujuan dari proyek ini adalah untuk membuat sebuah aplikasi berbasis web yang da
 
 ## Screenshot
 
-_(Tempat untuk menempelkan screenshot aplikasi Anda)_
+<img width="1440" height="812" alt="image" src="https://github.com/user-attachments/assets/f604e9c7-9313-439a-ab13-34e1c3bbd459" />
+<img width="1440" height="812" alt="image" src="https://github.com/user-attachments/assets/8134ee59-b1ea-4bb2-a08d-76e4eaef8466" />
+![Screenshot 2025-09-06 at 02 03 30](https://github.com/user-attachments/assets/9e49fe26-069f-42fc-9b3d-3523a5e72665)
+<img width="1440" height="812" alt="image" src="https://github.com/user-attachments/assets/3cda8418-e923-4a35-8dc2-5730eb1725ce" />
+<img width="1440" height="812" alt="image" src="https://github.com/user-attachments/assets/09792895-b647-49f2-9b39-90e834acec70" />
+<img width="1440" height="812" alt="image" src="https://github.com/user-attachments/assets/0cc60156-4711-432a-b131-89ca096db8dd" />
+<img width="1440" height="812" alt="image" src="https://github.com/user-attachments/assets/da9c2fae-d48d-45be-8434-24c0ddd3ec72" />
+![Image 06-09-25 at 02 10](https://github.com/user-attachments/assets/b94ee5ef-906d-4335-950b-c67c6a59f0d0)
+<img width="1440" height="812" alt="image" src="https://github.com/user-attachments/assets/0a714054-b3df-4312-8dc2-ff3e0870aa20" />
 
 ---
 
