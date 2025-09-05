@@ -60,6 +60,32 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
       await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateAsync(ArsipSuratDto dto)
+    {
+      var arsipSurat = await GetByIdAsync(dto.Id);
+      if (arsipSurat != null)
+      {
+        // Cek apakah ada file baru yang diunggah
+        if (dto.FilePdf != null && dto.FilePdf.Length > 0)
+        {
+          // 1. Hapus file lama
+          _fileStorageService.DeleteFile(arsipSurat.FilePath);
+
+          // 2. Simpan file baru
+          var newFilePath = await _fileStorageService.SaveFileAsync(dto.FilePdf, "surat");
+          arsipSurat.FilePath = newFilePath;
+        }
+
+        // Update properti lainnya
+        arsipSurat.NomorSurat = dto.NomorSurat;
+        arsipSurat.Judul = dto.Judul;
+        arsipSurat.KategoriSuratId = dto.KategoriSuratId;
+
+        _context.ArsipSurats.Update(arsipSurat);
+        await _context.SaveChangesAsync();
+      }
+    }
+
     public async Task DeleteAsync(int id)
     {
       var arsipSurat = await GetByIdAsync(id);

@@ -46,7 +46,8 @@ namespace AspnetCoreMvcFull.Controllers
     {
       // Siapkan data kategori untuk dropdown
       ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori");
-      return View();
+      // Kirim DTO kosong ke View agar tidak null
+      return View(new ArsipSuratDto());
     }
 
     // POST: /ArsipSurat/Create
@@ -64,6 +65,49 @@ namespace AspnetCoreMvcFull.Controllers
       // Jika model tidak valid, kirim kembali daftar kategori ke view
       ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori");
       return View(dto);
+    }
+
+    public async Task<IActionResult> Edit(int? id)
+    {
+      if (id == null) return NotFound();
+
+      var arsip = await _arsipService.GetByIdAsync(id.Value);
+      if (arsip == null) return NotFound();
+
+      // Mapping dari Model ke DTO untuk dikirim ke View
+      var dto = new ArsipSuratDto
+      {
+        Id = arsip.Id,
+        NomorSurat = arsip.NomorSurat,
+        Judul = arsip.Judul,
+        KategoriSuratId = arsip.KategoriSuratId
+      };
+
+      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori", arsip.KategoriSuratId);
+      return View("Create", dto); // Menggunakan kembali View "Create.cshtml"
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, ArsipSuratDto dto)
+    {
+      if (id != dto.Id) return NotFound();
+
+      // Hapus validasi untuk FilePdf jika tidak ada file baru yang diunggah
+      if (dto.FilePdf == null)
+      {
+        ModelState.Remove("FilePdf");
+      }
+
+      if (ModelState.IsValid)
+      {
+        await _arsipService.UpdateAsync(dto);
+        TempData["SuccessMessage"] = "Data berhasil diperbarui!";
+        return RedirectToAction(nameof(Index));
+      }
+
+      ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(), "Id", "NamaKategori", dto.KategoriSuratId);
+      return View("Create", dto); // Kembali ke form jika tidak valid
     }
 
     // POST: /ArsipSurat/Delete/5

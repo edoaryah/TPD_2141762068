@@ -21,9 +21,6 @@
 </nav>
 
 <div class="card">
-  <div class="card-header">
-    <h5>Detail Arsip Surat</h5>
-  </div>
   <div class="card-body">
     <ul class="list-group list-group-flush mb-4">
       <li class="list-group-item"><strong>Nomor:</strong> @Model.NomorSurat</li>
@@ -38,9 +35,10 @@
     </div>
 
     <div>
-      <a asp-action="Index" class="btn btn-secondary">
-        << Kembali</a>
-          <a asp-action="Download" asp-route-id="@Model.Id" class="btn btn-warning">Unduh</a>
+      <a asp-action="Index" class="btn btn-secondary">Kembali</a>
+      <a asp-action="Download" asp-route-id="@Model.Id" class="btn btn-warning">Unduh</a>
+      <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">Edit/Ganti File</a>
     </div>
   </div>
+</div>
 </div>

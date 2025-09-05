@@ -1,0 +1,65 @@
+@model AspnetCoreMvcFull.DTOs.KategoriSuratDto
+
+@{
+    // Logika untuk menentukan mode, judul halaman, dan deskripsi
+    bool isEditMode = Model != null && Model.Id != 0;
+    ViewData["Title"] = isEditMode ? "Ubah Kategori" : "Tambah Kategori";
+    string pageDescription = isEditMode ? "Ubah data kategori. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'." : "Tambahkan data kategori baru. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'.";
+    ViewData["isNavbar"] = false;
+    ViewData["navbarType"] = "layout-navbar-hidden";
+}
+
+<h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Kategori Surat /</span> @(isEditMode ? "Ubah" : "Tambah")
+</h4>
+
+<div class="row">
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Formulir Kategori Surat</h5>
+            </div>
+            <div class="card-body">
+                <p>@pageDescription</p>
+
+                <form asp-action="@(isEditMode ? "Edit" : "Create")" asp-route-id="@Model?.Id" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    @if (isEditMode)
+                    {
+                        <input type="hidden" asp-for="Id" />
+                    }
+
+                    @if (isEditMode)
+                    {
+                        <div class="mb-3">
+                            <label class="form-label" for="kategori-id">ID Kategori</label>
+                            <input type="text" class="form-control" id="kategori-id" value="@Model.Id" readonly />
+                            <div class="form-text">ID dibuat secara otomatis (Auto Increment)</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="NamaKategori">Nama Kategori</label>
+                        <input type="text" class="form-control" asp-for="NamaKategori" placeholder="Contoh: Undangan">
+                        <span asp-validation-for="NamaKategori" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Keterangan">Keterangan</label>
+                        <textarea class="form-control" asp-for="Keterangan" rows="3" placeholder="Jelaskan kegunaan kategori ini..."></textarea>
+                        <span asp-validation-for="Keterangan" class="text-danger"></span>
+                    </div>
+
+                    <div class="mt-4">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            << Kembali
+                        </a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

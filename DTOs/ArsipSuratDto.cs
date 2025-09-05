@@ -5,6 +5,8 @@ namespace AspnetCoreMvcFull.DTOs
 {
   public class ArsipSuratDto
   {
+    public int Id { get; set; }
+
     [Required(ErrorMessage = "Nomor Surat wajib diisi.")]
     public string NomorSurat { get; set; }
 
@@ -15,6 +17,6 @@ namespace AspnetCoreMvcFull.DTOs
     public int KategoriSuratId { get; set; }
 
     [Required(ErrorMessage = "File PDF wajib diunggah.")]
-    public IFormFile FilePdf { get; set; }
+    public IFormFile? FilePdf { get; set; }
   }
 }

@@ -1,37 +1,38 @@
 @model AspnetCoreMvcFull.DTOs.ArsipSuratDto
 
 @{
-  ViewData["Title"] = "Unggah Surat";
+  // Logika untuk menentukan judul halaman
+  bool isEditMode = Model.Id != 0;
+  ViewData["Title"] = isEditMode ? "Ubah Arsip Surat" : "Unggah Surat";
   ViewData["isNavbar"] = false;
   ViewData["navbarType"] = "layout-navbar-hidden";
 }
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="@Url.Action("Index", "Home")">Home</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="@Url.Action("Index", "ArsipSurat")">Arsip Surat</a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-      Unggah Surat
-    </li>
-  </ol>
-</nav>
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Arsip Surat /</span> @(isEditMode ? "Ubah" : "Unggah")
+</h4>
 
 <div class="row">
   <div class="col-xl">
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Unggah Arsip Surat Baru</h5>
+        <h5 class="mb-0">@ViewData["Title"]</h5>
       </div>
       <div class="card-body">
-        <p>Unggah surat yang telah terbit pada form ini untuk diarsipkan.</p>
-        <p><strong>Catatan:</strong><br />- Gunakan file berformat PDF.</p>
+        @if (!isEditMode)
+        {
+          <p>Unggah surat yang telah terbit pada form ini untuk diarsipkan.</p>
+          <p><strong>Catatan:</strong><br />- Gunakan file berformat PDF.</p>
+        }
 
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <form asp-action="@(isEditMode ? "Edit" : "Create")" asp-route-id="@Model.Id" method="post"
+          enctype="multipart/form-data">
           @Html.AntiForgeryToken()
+
+          @if (isEditMode)
+          {
+            <input type="hidden" asp-for="Id" />
+          }
 
           <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
@@ -57,6 +58,10 @@
 
           <div class="mb-3">
             <label class="form-label" asp-for="FilePdf">File Surat (PDF)</label>
+            @if (isEditMode)
+            {
+              <p class="form-text">Kosongkan jika tidak ingin mengubah file.</p>
+            }
             <input class="form-control" type="file" asp-for="FilePdf" accept=".pdf">
             <span asp-validation-for="FilePdf" class="text-danger"></span>
           </div>

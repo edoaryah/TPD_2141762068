@@ -55,7 +55,7 @@ namespace AspnetCoreMvcFull.Controllers
         Keterangan = kategori.Keterangan
       };
 
-      return View(dto);
+      return View("Create", dto);
     }
 
     // POST: /KategoriSurat/Edit/5

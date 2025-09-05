@@ -9,6 +9,7 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
     Task<IEnumerable<Models.ArsipSurat>> GetAllAsync(string searchQuery);
     Task<Models.ArsipSurat> GetByIdAsync(int id);
     Task CreateAsync(ArsipSuratDto dto);
+    Task UpdateAsync(ArsipSuratDto dto);
     Task DeleteAsync(int id);
   }
 }
