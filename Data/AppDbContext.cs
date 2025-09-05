@@ -16,7 +16,7 @@ namespace AspnetCoreMvcFull.Data
     {
       base.OnModelCreating(modelBuilder);
 
-      // Seeding data awal untuk kategori
+      // seed data awal kategori
       modelBuilder.Entity<KategoriSurat>().HasData(
           new KategoriSurat { Id = 1, NamaKategori = "Undangan", Keterangan = "Surat bersifat undangan resmi.", IsDeleted = false },
           new KategoriSurat { Id = 2, NamaKategori = "Pengumuman", Keterangan = "Surat bersifat pengumuman.", IsDeleted = false },

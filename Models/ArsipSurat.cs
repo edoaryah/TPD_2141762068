@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,7 +20,7 @@ namespace AspnetCoreMvcFull.Models
     public DateTime WaktuPengarsipan { get; set; }
 
     [Required(ErrorMessage = "File PDF wajib diunggah.")]
-    public string FilePath { get; set; } // Path relatif ke file PDF yang disimpan
+    public string FilePath { get; set; }
 
     // Foreign Key untuk KategoriSurat
     [Required(ErrorMessage = "Kategori wajib dipilih.")]

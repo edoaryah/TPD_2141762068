@@ -1,10 +1,10 @@
 @model AspnetCoreMvcFull.DTOs.ArsipSuratDto
 
 @{
-  // Logika untuk menentukan judul halaman
   bool isEditMode = Model.Id != 0;
   ViewData["Title"] = isEditMode ? "Ubah Arsip Surat" : "Unggah Surat";
   string pageDescription = isEditMode ? "Silakan ubah detail arsip surat pada form di bawah ini." : "Unggah surat yang telah terbit pada form ini untuk diarsipkan.";
+
   @* ViewData["isNavbar"] = false;
   ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }

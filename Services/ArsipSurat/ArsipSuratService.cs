@@ -1,8 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AspnetCoreMvcFull.Data;
 using AspnetCoreMvcFull.DTOs;
 using AspnetCoreMvcFull.Services.Storage;
@@ -28,10 +24,8 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
 
       if (!string.IsNullOrEmpty(searchQuery))
       {
-        // Ubah searchQuery menjadi huruf kecil sekali saja untuk efisiensi
         var lowerCaseQuery = searchQuery.ToLower();
 
-        // Ubah kondisi Where untuk mencari di dua kolom dan abaikan case
         query = query.Where(s =>
             s.Judul.ToLower().Contains(lowerCaseQuery) ||
             s.NomorSurat.ToLower().Contains(lowerCaseQuery)
@@ -58,7 +52,6 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
         NomorSurat = dto.NomorSurat,
         Judul = dto.Judul,
         KategoriSuratId = dto.KategoriSuratId.Value,
-        // WaktuPengarsipan = DateTime.Now,
         WaktuPengarsipan = DateTime.UtcNow,
         FilePath = filePath
       };
@@ -83,7 +76,6 @@ namespace AspnetCoreMvcFull.Services.ArsipSurat
           arsipSurat.FilePath = newFilePath;
         }
 
-        // Update properti lainnya
         arsipSurat.NomorSurat = dto.NomorSurat;
         arsipSurat.Judul = dto.Judul;
         arsipSurat.KategoriSuratId = dto.KategoriSuratId.Value;

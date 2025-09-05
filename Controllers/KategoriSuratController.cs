@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using AspnetCoreMvcFull.DTOs;
 using AspnetCoreMvcFull.Services.KategoriSurat;
 
@@ -43,7 +42,6 @@ namespace AspnetCoreMvcFull.Controllers
         }
         catch (InvalidOperationException ex)
         {
-          // Kirim pesan error via TempData untuk ditangkap oleh Toastify
           TempData["ErrorMessage"] = ex.Message;
           return View(dto);
         }
@@ -83,7 +81,6 @@ namespace AspnetCoreMvcFull.Controllers
         }
         catch (InvalidOperationException ex)
         {
-          // Kirim pesan error via TempData untuk ditangkap oleh Toastify
           TempData["ErrorMessage"] = ex.Message;
           return View("Create", dto);
         }

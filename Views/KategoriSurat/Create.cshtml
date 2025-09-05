@@ -1,22 +1,21 @@
 @model AspnetCoreMvcFull.DTOs.KategoriSuratDto
 
 @{
-    // Logika untuk menentukan mode, judul halaman, dan deskripsi
-    bool isEditMode = Model != null && Model.Id != 0;
-    ViewData["Title"] = isEditMode ? "Ubah Kategori" : "Tambah Kategori";
-    string pageDescription = isEditMode ? "Ubah data kategori. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'." : "Tambahkan data kategori baru. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'.";
+  bool isEditMode = Model != null && Model.Id != 0;
+  ViewData["Title"] = isEditMode ? "Ubah Kategori" : "Tambah Kategori";
+  string pageDescription = isEditMode ? "Ubah data kategori. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'." : "Tambahkan data kategori baru. Jika sudah selesai, jangan lupa untuk mengklik tombol 'Simpan'.";
 
-    @* ViewData["isNavbar"] = false;
-    ViewData["navbarType"] = "layout-navbar-hidden"; *@
+  @* ViewData["isNavbar"] = false;
+  ViewData["navbarType"] = "layout-navbar-hidden"; *@
 
-    var successMessage = TempData["SuccessMessage"] as string;
-    var errorMessage = TempData["ErrorMessage"] as string;
-    if (successMessage != null) { TempData.Remove("SuccessMessage"); }
-    if (errorMessage != null) { TempData.Remove("ErrorMessage"); }
+  var successMessage = TempData["SuccessMessage"] as string;
+  var errorMessage = TempData["ErrorMessage"] as string;
+  if (successMessage != null) { TempData.Remove("SuccessMessage"); }
+  if (errorMessage != null) { TempData.Remove("ErrorMessage"); }
 }
 
 @section PageStyles {
-    <link rel="stylesheet" href="~/vendor/libs/toastify/toastify.min.css">
+  <link rel="stylesheet" href="~/vendor/libs/toastify/toastify.min.css">
 }
 
 <nav aria-label="breadcrumb">
@@ -31,78 +30,78 @@
 </nav>
 
 <div class="row">
-    <div class="col-xl">
-        <div class="card mb-4">
-            <div class="card-body">
-                <p>@pageDescription</p>
+  <div class="col-xl">
+    <div class="card mb-4">
+      <div class="card-body">
+        <p>@pageDescription</p>
 
-                <form asp-action="@(isEditMode ? "Edit" : "Create")" asp-route-id="@Model?.Id" method="post">
-                    @Html.AntiForgeryToken()
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <form asp-action="@(isEditMode ? "Edit" : "Create")" asp-route-id="@Model?.Id" method="post">
+          @Html.AntiForgeryToken()
+          <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                    @if (isEditMode)
-                    {
-                        <input type="hidden" asp-for="Id" />
-                    }
+          @if (isEditMode)
+          {
+            <input type="hidden" asp-for="Id" />
+          }
 
-                    @if (isEditMode)
-                    {
-                        <div class="mb-3">
-                            <label class="form-label" for="kategori-id">ID Kategori</label>
-                            <input type="text" class="form-control" id="kategori-id" value="@Model.Id" readonly />
-                            <div class="form-text">ID dibuat secara otomatis (Auto Increment)</div>
-                        </div>
-                    }
-
-                    <div class="mb-3">
-                        <label class="form-label" asp-for="NamaKategori">Nama Kategori</label>
-                        <input type="text" class="form-control" asp-for="NamaKategori" placeholder="Contoh: Undangan">
-                        <span asp-validation-for="NamaKategori" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" asp-for="Keterangan">Keterangan</label>
-                        <textarea class="form-control" asp-for="Keterangan" rows="3" placeholder="Jelaskan kegunaan kategori ini..."></textarea>
-                        <span asp-validation-for="Keterangan" class="text-danger"></span>
-                    </div>
-
-                    <div class="mt-5">
-                        <a asp-action="Index" class="btn btn-secondary me-2" style="width: 120px;">Kembali</a>
-                        <button type="submit" class="btn btn-primary" style="width: 120px;">Simpan</button>
-                    </div>
-                </form>
+          @if (isEditMode)
+          {
+            <div class="mb-3">
+              <label class="form-label" for="kategori-id">ID Kategori</label>
+              <input type="text" class="form-control" id="kategori-id" value="@Model.Id" readonly />
+              <div class="form-text">ID dibuat secara otomatis (Auto Increment)</div>
             </div>
-        </div>
+          }
+
+          <div class="mb-3">
+            <label class="form-label" asp-for="NamaKategori">Nama Kategori</label>
+            <input type="text" class="form-control" asp-for="NamaKategori" placeholder="Contoh: Undangan">
+            <span asp-validation-for="NamaKategori" class="text-danger"></span>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" asp-for="Keterangan">Keterangan</label>
+            <textarea class="form-control" asp-for="Keterangan" rows="3" placeholder="Jelaskan kegunaan kategori ini..."></textarea>
+            <span asp-validation-for="Keterangan" class="text-danger"></span>
+          </div>
+
+          <div class="mt-5">
+            <a asp-action="Index" class="btn btn-secondary me-2" style="width: 120px;">Kembali</a>
+            <button type="submit" class="btn btn-primary" style="width: 120px;">Simpan</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 @section PageScripts {
-    <script src="~/vendor/libs/toastify/toastify-js.js"></script>
-    <script>
-        function showToast(message, type = 'success') {
-            const title = type === 'success' ? 'Berhasil!' : 'Gagal!';
-            Toastify({
-                text: `${title} ${message}`,
-                duration: 5000,
-                close: true,
-                gravity: 'top',
-                position: 'right',
-                stopOnFocus: true,
-                style: {
-                    background: type === 'success' ? '#198754' : '#dc3545',
-                    borderRadius: '0.5rem',
-                },
-            }).showToast();
-        }
+  <script src="~/vendor/libs/toastify/toastify-js.js"></script>
+  <script>
+    function showToast(message, type = 'success') {
+      const title = type === 'success' ? 'Sukses!' : 'Gagal!';
+      Toastify({
+        text: `${title} ${message}`,
+        duration: 3000,
+        close: true,
+        gravity: 'top',
+        position: 'right',
+        stopOnFocus: true,
+        style: {
+          background: type === 'success' ? '#198754' : '#dc3545',
+          borderRadius: '0.5rem',
+        },
+      }).showToast();
+    }
 
-        var successMsg = "@successMessage";
-        var errorMsg = "@errorMessage";
+    var successMsg = "@successMessage";
+    var errorMsg = "@errorMessage";
 
-        if (successMsg) {
-            showToast(successMsg, 'success');
-        }
-        if (errorMsg) {
-            showToast(errorMsg, 'error');
-        }
-    </script>
+    if (successMsg) {
+      showToast(successMsg, 'success');
+    }
+    if (errorMsg) {
+    showToast(errorMsg, 'error');
+    }
+  </script>
 }

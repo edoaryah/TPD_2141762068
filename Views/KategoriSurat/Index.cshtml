@@ -2,6 +2,7 @@
 
 @{
   ViewData["Title"] = "Kategori Surat";
+
   @* ViewData["isNavbar"] = false;
   ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
@@ -122,7 +123,7 @@
   <script src="~/vendor/libs/toastify/toastify-js.js"></script>
   <script>
     function showToast(message, type = 'success') {
-      const title = type === 'success' ? 'Berhasil!' : 'Gagal!';
+      const title = type === 'success' ? 'Sukses!' : 'Gagal!';
       Toastify({
         text: `${title} ${message}`,
         duration: 3000,

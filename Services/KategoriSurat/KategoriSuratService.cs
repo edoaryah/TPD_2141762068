@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AspnetCoreMvcFull.Data;
 using AspnetCoreMvcFull.DTOs;
-using AspnetCoreMvcFull.Models;
 
 namespace AspnetCoreMvcFull.Services.KategoriSurat
 {
@@ -39,7 +36,7 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
 
     public async Task CreateAsync(KategoriSuratDto dto)
     {
-      // DITAMBAHKAN: Validasi untuk mencegah nama duplikat pada kategori aktif
+      // validasi untuk prevent nama duplikat pada kategori yg aktif
       var existingCategory = await _context.KategoriSurats
           .FirstOrDefaultAsync(k => k.NamaKategori.ToLower() == dto.NamaKategori.ToLower() && !k.IsDeleted);
 
@@ -61,7 +58,7 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
 
     public async Task UpdateAsync(KategoriSuratDto dto)
     {
-      // DITAMBAHKAN: Validasi untuk mencegah nama duplikat saat update
+      // validasi untuk prevent nama duplikat saat update
       var existingCategory = await _context.KategoriSurats
           .FirstOrDefaultAsync(k => k.NamaKategori.ToLower() == dto.NamaKategori.ToLower() && !k.IsDeleted && k.Id != dto.Id);
 
@@ -85,7 +82,7 @@ namespace AspnetCoreMvcFull.Services.KategoriSurat
       var kategori = await GetByIdAsync(id);
       if (kategori != null)
       {
-        // DIUBAH: Terapkan Soft Delete, jangan hapus fisik
+        // menerapkan soft delete
         kategori.IsDeleted = true;
         _context.KategoriSurats.Update(kategori);
         await _context.SaveChangesAsync();

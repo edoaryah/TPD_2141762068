@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.IO;
-using System.Threading.Tasks;
 using AspnetCoreMvcFull.DTOs;
 using AspnetCoreMvcFull.Services.ArsipSurat;
 using AspnetCoreMvcFull.Services.KategoriSurat;
@@ -44,9 +41,8 @@ namespace AspnetCoreMvcFull.Controllers
     // GET: /ArsipSurat/Create
     public async Task<IActionResult> Create()
     {
-      // Siapkan data kategori untuk dropdown
+      // dropdown kategori
       ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori");
-      // Kirim DTO kosong ke View agar tidak null
       return View(new ArsipSuratDto());
     }
 
@@ -58,11 +54,9 @@ namespace AspnetCoreMvcFull.Controllers
       if (ModelState.IsValid)
       {
         await _arsipService.CreateAsync(dto);
-        // Pesan untuk ditampilkan di halaman utama setelah redirect
         TempData["SuccessMessage"] = "Data berhasil disimpan!";
         return RedirectToAction(nameof(Index));
       }
-      // Jika model tidak valid, kirim kembali daftar kategori ke view
       ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori");
       return View(dto);
     }
@@ -74,7 +68,8 @@ namespace AspnetCoreMvcFull.Controllers
       var arsip = await _arsipService.GetByIdAsync(id.Value);
       if (arsip == null) return NotFound();
 
-      // --- AWAL BLOK PERBAIKAN FINAL ---
+      // logika untuk menangani masalah pada dropdown edit arsip surat yang menggunakan
+      // kategori yang sudah dihapus.
 
       // 1. Ambil semua kategori yang aktif.
       var kategoriOptions = (await _kategoriService.GetAllAsync(null)).ToList();
@@ -92,8 +87,6 @@ namespace AspnetCoreMvcFull.Controllers
         kategoriOptions.Add(arsip.KategoriSurat);
       }
 
-      // --- AKHIR BLOK PERBAIKAN FINAL ---
-
       var dto = new ArsipSuratDto
       {
         Id = arsip.Id,
@@ -102,7 +95,6 @@ namespace AspnetCoreMvcFull.Controllers
         KategoriSuratId = arsip.KategoriSuratId
       };
 
-      // Urutkan daftar akhir berdasarkan nama untuk tampilan yang rapi
       ViewData["KategoriList"] = new SelectList(kategoriOptions.OrderBy(k => k.NamaKategori), "Id", "NamaKategori", arsip.KategoriSuratId);
 
       return View("Create", dto);
@@ -114,7 +106,6 @@ namespace AspnetCoreMvcFull.Controllers
     {
       if (id != dto.Id) return NotFound();
 
-      // Hapus validasi untuk FilePdf jika tidak ada file baru yang diunggah
       if (dto.FilePdf == null)
       {
         ModelState.Remove("FilePdf");
@@ -128,7 +119,7 @@ namespace AspnetCoreMvcFull.Controllers
       }
 
       ViewData["KategoriList"] = new SelectList(await _kategoriService.GetAllAsync(null), "Id", "NamaKategori", dto.KategoriSuratId);
-      return View("Create", dto); // Kembali ke form jika tidak valid
+      return View("Create", dto);
     }
 
     // POST: /ArsipSurat/Delete/5
@@ -158,7 +149,7 @@ namespace AspnetCoreMvcFull.Controllers
       }
       memory.Position = 0;
 
-      // Memberi nama file saat di-download
+      // memberi nama file pas download
       var downloadFileName = $"{arsip.NomorSurat.Replace("/", "_")}_{arsip.Judul}.pdf";
 
       return File(memory, "application/pdf", downloadFileName);

@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-
 namespace AspnetCoreMvcFull.Services.Storage
 {
   public interface IFileStorageService

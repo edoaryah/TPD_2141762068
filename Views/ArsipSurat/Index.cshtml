@@ -2,6 +2,7 @@
 
 @{
   ViewData["Title"] = "Arsip Surat";
+
   @* ViewData["isNavbar"] = false;
   ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
@@ -130,7 +131,7 @@
   <script src="~/vendor/libs/toastify/toastify-js.js"></script>
   <script>
     function showToast(message, type = 'success') {
-      const title = type === 'success' ? 'Berhasil!' : 'Gagal!';
+      const title = type === 'success' ? 'Sukses!' : 'Gagal!';
       Toastify({
         text: `${title} ${message}`,
         duration: 3000,
@@ -151,17 +152,14 @@
       showToast(successMessage, 'success');
     }
 
-    // Script untuk menangani modal konfirmasi hapus
     var deleteModal = document.getElementById('deleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
-      // Tombol yang memicu modal
+
       var button = event.relatedTarget;
 
-      // Ekstrak info dari atribut data-*
       var recordId = button.getAttribute('data-id');
       var judulSurat = button.getAttribute('data-judul');
 
-      // Perbarui konten modal
       var modalJudul = deleteModal.querySelector('#judulSuratToDelete');
       var deleteForm = deleteModal.querySelector('#deleteForm');
       var recordIdInput = deleteModal.querySelector('#recordIdToDelete');
@@ -169,8 +167,6 @@
       modalJudul.textContent = judulSurat;
       recordIdInput.value = recordId;
 
-      // Atur action form secara dinamis (meskipun sudah di-handle oleh asp-action, ini lebih eksplisit)
-      // Anda bisa hapus baris ini jika asp-action sudah cukup
       deleteForm.action = '/ArsipSurat/Delete/' + recordId;
     });
   </script>
