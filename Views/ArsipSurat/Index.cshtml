@@ -8,12 +8,10 @@
 }
 
 @{
-  var message = TempData["SuccessMessage"] as string;
-
-  if (message != null)
-  {
-    TempData.Remove("SuccessMessage");
-  }
+  var successMessage = TempData["SuccessMessage"] as string;
+  var errorMessage = TempData["ErrorMessage"] as string;
+  if (successMessage != null) { TempData.Remove("SuccessMessage"); }
+  if (errorMessage != null) { TempData.Remove("ErrorMessage"); }
 }
 
 @section PageStyles {
@@ -169,10 +167,14 @@
       }).showToast();
     }
 
-    var successMessage = "@message";
+    var successMsg = "@successMessage";
+    var errorMsg = "@errorMessage";
 
-    if (successMessage) {
-      showToast(successMessage, 'success');
+    if (successMsg) {
+      showToast(successMsg, 'success');
+    }
+    if (errorMsg) {
+      showToast(errorMsg, 'error');
     }
 
     // modal delete

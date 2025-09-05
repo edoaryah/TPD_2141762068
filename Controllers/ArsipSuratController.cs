@@ -140,16 +140,22 @@ namespace AspnetCoreMvcFull.Controllers
       var arsip = await _arsipService.GetByIdAsync(id.Value);
       if (arsip == null || string.IsNullOrEmpty(arsip.FilePath)) return NotFound();
 
-      var memory = new MemoryStream();
       var path = Path.Combine(_webHostEnvironment.WebRootPath, arsip.FilePath);
 
+      if (!System.IO.File.Exists(path))
+      {
+        // Jika file tidak ada, kirim pesan error dan direct ke halaman Index
+        TempData["ErrorMessage"] = "File tidak ditemukan di server.";
+        return RedirectToAction(nameof(Index));
+      }
+
+      var memory = new MemoryStream();
       using (var stream = new FileStream(path, FileMode.Open))
       {
         await stream.CopyToAsync(memory);
       }
       memory.Position = 0;
 
-      // memberi nama file pas download
       var downloadFileName = $"{arsip.NomorSurat.Replace("/", "_")}_{arsip.Judul}.pdf";
 
       return File(memory, "application/pdf", downloadFileName);

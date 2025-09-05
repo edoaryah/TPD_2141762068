@@ -7,6 +7,17 @@
   ViewData["navbarType"] = "layout-navbar-hidden"; *@
 }
 
+@{
+  var successMessage = TempData["SuccessMessage"] as string;
+  var errorMessage = TempData["ErrorMessage"] as string;
+  if (successMessage != null) { TempData.Remove("SuccessMessage"); }
+  if (errorMessage != null) { TempData.Remove("ErrorMessage"); }
+}
+
+@section PageStyles {
+  <link rel="stylesheet" href="~/vendor/libs/toastify/toastify.min.css">
+}
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
@@ -40,3 +51,34 @@
   </div>
 </div>
 </div>
+
+@section PageScripts {
+  <script src="~/vendor/libs/toastify/toastify-js.js"></script>
+  <script>
+    function showToast(message, type = 'success') {
+      const title = type === 'success' ? 'Sukses!' : 'Gagal!';
+      Toastify({
+        text: `${title} ${message}`,
+        duration: 3000,
+        close: true,
+        gravity: 'top',
+        position: 'right',
+        stopOnFocus: true,
+        style: {
+          background: type === 'success' ? '#198754' : '#dc3545',
+          borderRadius: '0.5rem',
+        },
+      }).showToast();
+    }
+
+    var successMsg = "@successMessage";
+    var errorMsg = "@errorMessage";
+
+    if (successMsg) {
+      showToast(successMsg, 'success');
+    }
+    if (errorMsg) {
+      showToast(errorMsg, 'error');
+    }
+  </script>
+}
