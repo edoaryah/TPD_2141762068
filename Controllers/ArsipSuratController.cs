@@ -146,7 +146,19 @@ namespace AspnetCoreMvcFull.Controllers
       {
         // Jika file tidak ada, kirim pesan error dan direct ke halaman Index
         TempData["ErrorMessage"] = "File tidak ditemukan di server.";
-        return RedirectToAction(nameof(Index));
+
+        // Cek dari halaman mana pengguna datang (URL sebelumnya)
+        string refererUrl = Request.Headers["Referer"].ToString();
+
+        // Jika ada URL sebelumnya, kembali ke sana. Jika tidak, kembali ke Index.
+        if (!string.IsNullOrEmpty(refererUrl))
+        {
+          return Redirect(refererUrl);
+        }
+        else
+        {
+          return RedirectToAction(nameof(Index));
+        }
       }
 
       var memory = new MemoryStream();
