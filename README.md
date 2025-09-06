@@ -27,7 +27,9 @@ Tujuan dari proyek ini adalah untuk membuat sebuah aplikasi berbasis web yang da
   - Validasi untuk mencegah adanya nama kategori yang duplikat.
 
 - **Antarmuka Pengguna**:
+  - Bootstrap 5.
   - Notifikasi menggunakan **Toastify** untuk pesan sukses atau gagal.
+  - Modal.
 
 ---
 
