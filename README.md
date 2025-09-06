@@ -37,7 +37,7 @@ Tujuan dari proyek ini adalah untuk membuat sebuah aplikasi berbasis web yang da
     Salin proyek ini ke komputer lokal Anda.
 
     ```bash
-    git clone [URL_REPOSITORY_ANDA]
+    git clone https://github.com/edoaryah/TPD_2141762068.git
     ```
 
 2.  **Buat Database PostgreSQL**
